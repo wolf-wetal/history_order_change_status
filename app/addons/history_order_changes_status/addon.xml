@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>history_order_changes_status</id>
+    <version>1.0</version>
+    <priority>4294967294</priority>
+    <position>1</position>
+    <auto_install>MULTIVENDOR,ULTIMATE</auto_install>
+    <status>active</status>
+    <default_language>en</default_language>
+
+    <queries>
+        <item for="install">
+            DROP TABLE IF EXISTS ?:history_order_changes_status;
+        </item>
+        <item for="install">
+            CREATE TABLE `?:history_order_changes_status` (
+            `history_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+            `order_id` mediumint(8) unsigned NOT NULL default '0',
+            `user_id` mediumint(8) unsigned NOT NULL default '0',
+            `timestamp` int(11) unsigned NOT NULL default '0',
+            `status_old` char(1) NOT NULL DEFAULT 'O',
+            `status_new` char(1) NOT NULL DEFAULT 'O',
+            PRIMARY KEY  (`history_id`),
+            KEY `user_id` (`user_id`),
+            KEY `timestamp` (`timestamp`),
+            KEY `status_old` (`status_old`),
+            KEY `status_new` (`status_new`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item for="uninstall">
+            DROP TABLE IF EXISTS ?:history_orders_status;
+        </item>
+        <item for="install" editions="MULTIVENDOR,ULTIMATE">
+            REPLACE INTO ?:privileges (privilege, is_default, section_id, group_id, is_view) VALUES ('manage_history_order_changes_status', 'Y', 'orders', 'history_order_changes_status', 'N');
+        </item>
+        <item for="uninstall" editions="MULTIVENDOR,ULTIMATE">
+            DELETE FROM ?:privileges WHERE privilege IN ('manage_history_order_changes_status', 'view_history_order_changes_status');
+        </item>
+    </queries>
+
+</addon>
