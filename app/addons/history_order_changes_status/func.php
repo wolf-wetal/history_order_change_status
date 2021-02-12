@@ -4,18 +4,17 @@ use Tygh\Navigation\LastView;
 
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
-function fn_save_history_order_changes_status ($order_id, $user_id, $product_id, $status_old, $status_new, $timestamp = TIME) {
+function fn_save_history_order_changes_status ($order_id, $user_id, $status_old, $status_new, $timestamp = TIME)
+{
     $data = db_query("INSERT INTO ?:history_order_changes_status SET ?u", array(
         'order_id' => $order_id,
         'user_id' => $user_id,
-        'product_id' => $product_id,
         'status_old' => $status_old,
         'status_new' => $status_new,
         'timestamp' => $timestamp
     ));
 
     return $data;
-
 }
 
 function fn_get_history_order_changes_status($params = array(), $lang_code = CART_LANGUAGE)
@@ -91,22 +90,26 @@ function fn_get_history_order_changes_status($params = array(), $lang_code = CAR
         . $limit
     );
 
-
     LastView::instance()->processResults('history_order_changes_status', $items, $params);
 
     return [$items, $params];
 }
-
 
 function fn_history_order_changes_status_change_order_status($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
     if ($status_to != $status_from) {
         $user_id = 0;
         $user_id = $_SESSION['auth']['user_id'];
-
-        fn_save_history_order_changes_status($order_info['order_id'], $user_id, 2222, $status_from, $status_to);
-
+        fn_save_history_order_changes_status($order_info['order_id'], $user_id, $status_from, $status_to);
     }
 }
 
+function fn_history_order_changes_status_get_responsibles()
+{
+    $items = db_get_hash_single_array(
+        "SELECT user_id, CONCAT(lastname, ' ', firstname) as name FROM ?:users WHERE user_type = ?s ",
+        array('user_id', 'name'), 'A'
+    );
 
+    return $items;
+}
