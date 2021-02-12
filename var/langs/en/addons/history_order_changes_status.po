@@ -19,7 +19,6 @@ msgctxt "Languages::history_order_changes"
 msgid "History order changes status"
 msgstr "History order changes status"
 
-
 msgctxt "Languages::history_order_changes_status.id_order"
 msgid "ID order"
 msgstr "ID order"
