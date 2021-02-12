@@ -6,6 +6,7 @@
         {$_page_part = "#`$page_part`"}
 
     {/if}
+    
     <form action="{""|fn_url}{$_page_part}" name="orders_search_form" method="get" class="cm-disable-empty {$form_meta}">
 
     {capture name="simple_search"}
