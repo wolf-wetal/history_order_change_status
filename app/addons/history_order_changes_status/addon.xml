@@ -7,7 +7,6 @@
     <auto_install>MULTIVENDOR,ULTIMATE</auto_install>
     <status>active</status>
     <default_language>en</default_language>
-
     <queries>
         <item for="install">
             DROP TABLE IF EXISTS ?:history_order_changes_status;
@@ -31,11 +30,10 @@
             DROP TABLE IF EXISTS ?:history_orders_status;
         </item>
         <item for="install" editions="MULTIVENDOR,ULTIMATE">
-            REPLACE INTO ?:privileges (privilege, is_default, section_id, group_id, is_view) VALUES ('manage_history_order_changes_status', 'Y', 'orders', 'history_order_changes_status', 'N');
+            REPLACE INTO ?:privileges (privilege, is_default, section_id, group_id, is_view) VALUES ('manage_history_order_changes_status', 'Y', 'orders', 'history_order_changes_status', 'Y');
         </item>
         <item for="uninstall" editions="MULTIVENDOR,ULTIMATE">
-            DELETE FROM ?:privileges WHERE privilege IN ('manage_history_order_changes_status', 'view_history_order_changes_status');
+            DELETE FROM ?:privileges WHERE privilege = manage_history_order_changes_status;
         </item>
     </queries>
-
 </addon>
